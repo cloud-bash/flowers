@@ -3,7 +3,7 @@ const winningCombos = [
     /* horizontal */
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     /* vertical */
-    [0, 3, 6], [1, 4, 7], [2, 5, 6],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
     /* diagonal */
     [0, 4, 8], [6, 4, 2],
 ];
@@ -48,7 +48,6 @@ function handleTurn(event) {
             checkForWin(board, winningCombos, turn) === "X" ||
             checkForWin(board, winningCombos, turn) === "O") {
             isGameOver = true
-            console.log("gameOver")
         }
     }
 
@@ -88,7 +87,6 @@ function checkForWin(board, winningCombos, turn) {
 
     }
     if (!board.includes('')) {
-        console.log('draw')
         gamestatus.innerHTML = `Draw`;
         return "DRAW"
     }
