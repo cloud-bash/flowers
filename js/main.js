@@ -12,7 +12,7 @@ const winningCombos = [
 
 let board
 let turn = "X";
-let message = `It's ${turn}'s turn!`
+let message = `It's ${turn}'s turn`
 
 /* DOM functions: caching element references */
 const squares = Array.from(document.querySelectorAll('#board div'))
@@ -42,6 +42,10 @@ function handleTurn(event) {
 
     checkForWin(board, winningCombos, turn)
 
+    if (checkForWin(board, winningCombos, turn) === "DRAW") {
+        console.log("gameOver")
+    }
+
     render()
 }
 
@@ -69,16 +73,18 @@ function checkForWin(board, winningCombos, turn) {
         if (board[winningCombos[i][0]] !== '' &&
             board[winningCombos[i][0]] === board[winningCombos[i][1]] &&
             board[winningCombos[i][1]] === board[winningCombos[i][2]]) {
-            gamestatus.innerHTML = `${board[winningCombos[i][0]]} wins!!`;
+            gamestatus.innerHTML = `${board[winningCombos[i][0]]} wins!`;
             console.log(`${board[winningCombos[i][1]]} WINS`)
-            return `${board[winningCombos[i][1]]} WINS`;
+            return `${board[winningCombos[i][1]]}`;
 
-        } else if (!board.includes('')) {
-            console.log('draw')
-            gamestatus.innerHTML = `Draw`;
-        } else {
-            gamestatus.innerHTML = `It's ${turn}'s turn!`;
-        }
+        } else { gamestatus.innerHTML = `It's ${turn}'s turn`; }
+
+
+    }
+    if (!board.includes('')) {
+        console.log('draw')
+        gamestatus.innerHTML = `Draw`;
+        return "DRAW"
     }
 }
 
