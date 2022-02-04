@@ -92,6 +92,4 @@ function checkForWin(board, winningCombos, turn) {
     }
 }
 
-//test
-
 init()
