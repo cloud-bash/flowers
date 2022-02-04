@@ -13,6 +13,7 @@ const winningCombos = [
 let board
 let turn = "X";
 let message = `It's ${turn}'s turn`
+let isGameOver = false
 
 /* DOM functions: caching element references */
 const squares = Array.from(document.querySelectorAll('#board div'))
@@ -26,24 +27,29 @@ button.addEventListener('click', resetGame)
 /* General Gameplay functions:  */
 
 function handleTurn(event) {
-    let index = squares.findIndex((square) => {
-        return square === event.target
-    })
+    if (!isGameOver) {
+        let index = squares.findIndex((square) => {
+            return square === event.target
+        })
 
-    if (board[index] === '') {
-        board[index] = turn;
-        if (turn === "X") {
-            turn = "O"
-        } else {
-            turn = "X"
+        if (board[index] === '') {
+            board[index] = turn;
+            if (turn === "X") {
+                turn = "O"
+            } else {
+                turn = "X"
+            }
         }
-    }
 
 
-    checkForWin(board, winningCombos, turn)
+        checkForWin(board, winningCombos, turn)
 
-    if (checkForWin(board, winningCombos, turn) === "DRAW") {
-        console.log("gameOver")
+        if (checkForWin(board, winningCombos, turn) === "DRAW" ||
+            checkForWin(board, winningCombos, turn) === "X" ||
+            checkForWin(board, winningCombos, turn) === "O") {
+            isGameOver = true
+            console.log("gameOver")
+        }
     }
 
     render()
@@ -53,6 +59,7 @@ function resetGame() {
     board = ['', '', '', '', '', '', '', '', '']
     turn = "X"
     gamestatus.innerHTML = `It's ${turn}'s turn!`;
+    isGameOver = false
     render()
 }
 
@@ -74,7 +81,6 @@ function checkForWin(board, winningCombos, turn) {
             board[winningCombos[i][0]] === board[winningCombos[i][1]] &&
             board[winningCombos[i][1]] === board[winningCombos[i][2]]) {
             gamestatus.innerHTML = `${board[winningCombos[i][0]]} wins!`;
-            console.log(`${board[winningCombos[i][1]]} WINS`)
             return `${board[winningCombos[i][1]]}`;
 
         } else { gamestatus.innerHTML = `It's ${turn}'s turn`; }
