@@ -33,3 +33,16 @@ button {
     align-items: center;
     justify-content: center;
 }
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 266px;
+    background-color: rgb(216, 208, 208);
+}
+
+tfoot {
+    border-width: 10px;
+    border-radius: 100%;
+    border: rgba(0,0,0,.75);
+}
