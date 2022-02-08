@@ -14,11 +14,15 @@ let board
 let turn = "X";
 let message = `It's ${turn}'s turn`
 let isGameOver = false
+let XrunningTotal = 0
+let oRunningTotal = 0
 
 /* DOM functions: caching element references */
 const squares = Array.from(document.querySelectorAll('#board div'))
 const gamestatus = document.getElementById("gameStatus")
 const button = document.getElementById("reset")
+const XtotalScoreText = document.getElementById("xTotal")
+const OtotalScoreText = document.getElementById("oTotal")
 
 /* DOM functions: add event listeners to our elements */
 document.getElementById('board').addEventListener('click', handleTurn)
@@ -44,12 +48,24 @@ function handleTurn(event) {
 
         checkForWin(board, winningCombos, turn)
 
-        if (checkForWin(board, winningCombos, turn) === "DRAW" ||
-            checkForWin(board, winningCombos, turn) === "X" ||
-            checkForWin(board, winningCombos, turn) === "O") {
+        if (checkForWin(board, winningCombos, turn) === "DRAW") {
+            XrunningTotal += .5
+            oRunningTotal += .5
+            XtotalScoreText.innerHTML = XrunningTotal
+            OtotalScoreText.innerHTML = oRunningTotal
+            isGameOver = true
+        } else if (checkForWin(board, winningCombos, turn) === "X"){
+            XrunningTotal++
+            XtotalScoreText.innerHTML = XrunningTotal
+            isGameOver = true
+        } else if (checkForWin(board, winningCombos, turn) === "O") {
+            oRunningTotal++
+            OtotalScoreText.innerHTML = oRunningTotal
             isGameOver = true
         }
     }
+
+    
 
     render()
 }
